@@ -28,4 +28,5 @@ jobs:
           with open(os.getenv('GITHUB_OUTPUT'), 'a') as fh:
               print(f"results={result_str}", file=fh)
       - name: Output Result
-        run: echo "Dice roll results: ${{ steps.roll.outputs.results }}"
+        run: echo "Dice roll results: "
+        # run: echo "Dice roll results: ${{ steps.roll.outputs.results }}"
