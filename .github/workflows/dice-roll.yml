@@ -1,6 +1,16 @@
 name: Roll Dice
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+    inputs:
+      number_of_dice:
+        description: 'Number of dice'
+        required: true
+        default: '1'
+      number_of_sides:
+        description: 'Number of sides per die'
+        required: true
+        default: '6'
 
 jobs:
   roll-dice:
@@ -8,31 +18,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-          
+
       - name: Roll Dice
         id: roll
         run: |
-          python -c "
-import random
-import os
+          num_dice=${{ github.event.inputs.number_of_dice }}
+          num_sides=${{ github.event.inputs.number_of_sides }}
 
-num_dice = int(os.getenv('NUMBER_OF_DICE', '1'))
-num_sides = int(os.getenv('NUMBER_OF_SIDES', '6'))
+          results=()
+          for ((i=1; i<=num_dice; i++))
+          do
+            roll=$(( (RANDOM % num_sides) + 1 ))
+            results+=($roll)
+          done
+          
+          result_str=$(IFS=,; echo "${results[*]}")
+          echo "Rolled $num_dice dice with $num_sides sides: $result_str"
 
-results = [random.randint(1, num_sides) for _ in range(num_dice)]
-result_str = ', '.join(map(str, results))
+          # Set output variable
+          echo "results=$result_str" >> $GITHUB_OUTPUT
 
-print(f'Rolled {num_dice} dice with {num_sides} sides: {result_str}')
-
-# Set output variable
-with open(os.getenv('GITHUB_OUTPUT'), 'a') as fh:
-    print(f'results={result_str}', file=fh)
-          "
-        
       - name: Output Result
-        run: echo "Test Output"
+        run: echo "Dice roll results: ${{ steps.roll.outputs.results }}"
