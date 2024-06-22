@@ -23,6 +23,8 @@ jobs:
           done
           
           result_str=$(IFS=,; echo "${results[*]}")
+          
+          echo "Rolled $num_dice dice with $num_sides sides: $result_str"
 
       - name: Output Result
         run: echo "Test output"
