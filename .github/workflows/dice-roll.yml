@@ -25,6 +25,9 @@ jobs:
           result_str=$(IFS=,; echo "${results[*]}")
           
           echo "Rolled $num_dice dice with $num_sides sides: $result_str"
+          
+          # Set output variable
+          echo "results=$result_str" >> $GITHUB_ENV
 
       - name: Output Result
         run: echo "Test output"
