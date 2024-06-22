@@ -6,5 +6,8 @@ jobs:
   roll-dice:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
       - name: Output Result
         run: echo "Test Output"
