@@ -15,18 +15,6 @@ jobs:
           num_dice=${{ github.event.inputs.number_of_dice }}
           num_sides=${{ github.event.inputs.number_of_sides }}
 
-          results=()
-          for ((i=1; i<=num_dice; i++))
-          do
-            roll=$(( (RANDOM % num_sides) + 1 ))
-            results+=($roll)
-          done
-          
-          result_str=$(IFS=,; echo "${results[*]}")
-          echo "Rolled $num_dice dice with $num_sides sides: $result_str"
-
-          # Set output variable
-          echo "results=$result_str" >> $GITHUB_ENV
 
       - name: Output Result
-        run: echo "Dice roll results: ${{ env.results }}"
+        run: echo "Test output"
