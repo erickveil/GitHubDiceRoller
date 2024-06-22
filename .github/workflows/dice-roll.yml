@@ -21,6 +21,8 @@ jobs:
             roll=$(( (RANDOM % num_sides) + 1 ))
             results+=($roll)
           done
+          
+          result_str=$(IFS=,; echo "${results[*]}")
 
       - name: Output Result
         run: echo "Test output"
