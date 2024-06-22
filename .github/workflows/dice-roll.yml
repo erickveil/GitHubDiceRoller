@@ -30,4 +30,4 @@ jobs:
           echo "results=$result_str" >> $GITHUB_ENV
 
       - name: Output Result
-        run: echo "Test output"
+        run: echo "Dice roll results: ${{ env.results }}"
