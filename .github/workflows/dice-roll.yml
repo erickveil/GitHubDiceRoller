@@ -1,16 +1,6 @@
 name: Roll Dice
 
-on:
-  workflow_dispatch:
-    inputs:
-      number_of_dice:
-        description: 'Number of dice'
-        required: true
-        default: '1'
-      number_of_sides:
-        description: 'Number of sides per die'
-        required: true
-        default: '6'
+on: [workflow_dispatch]
 
 jobs:
   roll-dice:
@@ -36,7 +26,7 @@ jobs:
           echo "Rolled $num_dice dice with $num_sides sides: $result_str"
 
           # Set output variable
-          echo "results=$result_str" >> $GITHUB_OUTPUT
+          echo "results=$result_str" >> $GITHUB_ENV
 
       - name: Output Result
-        run: echo "Dice roll results: ${{ steps.roll.outputs.results }}"
+        run: echo "Dice roll results: ${{ env.results }}"
